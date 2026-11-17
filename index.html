@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseSight – Contactless Health Monitoring</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo-container">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+            <h1>PulseSight</h1>
+        </div>
+        <p class="subtitle">CONTACTLESS HEALTH MONITORING</p>
+        <div class="header-status" id="camera-connection-status">System Idle</div>
+    </header>
+
+    <main class="dashboard">
+        <!-- Camera Section -->
+        <section class="card camera-section">
+            <h2>Optical Sensor</h2>
+            <div class="camera-wrapper">
+                <video id="video-feed" autoplay playsinline muted></video>
+                <canvas id="processing-canvas" class="hidden"></canvas>
+                <div class="face-guide">
+                    <div class="guide-oval"></div>
+                </div>
+                <div class="camera-overlay-status">
+                    <span id="face-status">Awaiting Face</span>
+                </div>
+            </div>
+            <div class="camera-info">
+                <div class="info-item">
+                    <span class="label">Lighting:</span>
+                    <span id="lighting-status" class="value">Unknown</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Timer:</span>
+                    <span id="measurement-timer" class="value">00:00</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Health Parameters Section -->
+        <section class="card parameters-section">
+            <h2>Physiological Estimates</h2>
+            <div class="params-grid">
+                <div class="param-card">
+                    <span class="param-label">HEART RATE</span>
+                    <div class="param-value" id="hr-value">--</div>
+                    <span class="param-unit">BPM</span>
+                </div>
+                <div class="param-card">
+                    <span class="param-label">RESPIRATORY RATE</span>
+                    <div class="param-value" id="rr-value">--</div>
+                    <span class="param-unit">Breaths/min</span>
+                </div>
+                <div class="param-card">
+                    <span class="param-label">HEART RATE VARIABILITY</span>
+                    <div class="param-value" id="hrv-value">--</div>
+                    <span class="param-unit">ms (RMSSD)</span>
+                </div>
+                <div class="param-card unavailable">
+                    <span class="param-label">BLOOD OXYGEN (SpO2)</span>
+                    <div class="param-value small-text">NOT AVAILABLE</div>
+                    <span class="param-unit">Requires Validated Method</span>
+                </div>
+                <div class="param-card unavailable">
+                    <span class="param-label">BLOOD PRESSURE</span>
+                    <div class="param-value small-text">NOT AVAILABLE</div>
+                    <span class="param-unit">Requires Validated Device</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signal Monitoring Section -->
+        <section class="card signal-section">
+            <h2>Signal Monitoring</h2>
+            <div class="waveform-container">
+                <canvas id="waveform-canvas"></canvas>
+            </div>
+            <div class="signal-info">
+                <div class="info-item">
+                    <span class="label">Signal Quality:</span>
+                    <span id="signal-quality" class="value">None</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Processing:</span>
+                    <span id="processing-status" class="value">Idle</span>
+                </div>
+            </div>
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+        </section>
+
+        <!-- Controls Section -->
+        <section class="card controls-section">
+            <h2>System Controls</h2>
+            <div class="controls-grid">
+                <button id="btn-start" class="btn btn-primary">Start Measurement</button>
+                <button id="btn-stop" class="btn btn-danger" disabled>Stop Measurement</button>
+                <button id="btn-recalculate" class="btn btn-secondary" disabled>Recalculate</button>
+                <button id="btn-reset" class="btn btn-outline">Reset System</button>
+            </div>
+        </section>
+
+        <!-- Measurement Information Section -->
+        <section class="card info-section">
+            <h2>Measurement Information</h2>
+            <ul class="info-list">
+                <li><strong>Duration:</strong> <span id="info-duration">Minimum 30 seconds recommended for stable HR/HRV.</span></li>
+                <li><strong>Signal Quality:</strong> <span id="info-quality">Ensure steady lighting and minimal head movement.</span></li>
+                <li><strong>Availability:</strong> <span id="info-availability">HR, RR, and HRV are experimental estimates. SpO2 and BP are unavailable.</span></li>
+                <li><strong>Limitations:</strong> <span id="info-limitations">This is a research prototype. Not for medical diagnosis. rPPG is highly sensitive to motion artifacts and lighting changes.</span></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>PulseSight v1.0 | rPPG Research Prototype | Not a Medical Device</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
